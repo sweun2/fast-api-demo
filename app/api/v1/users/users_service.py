@@ -38,5 +38,3 @@ class UsersService:
             raise ValueError("비밀번호가 틀렸습니다")
         
         self.crud.delete_user(user)
-        
-    
