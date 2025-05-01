@@ -13,6 +13,13 @@ class UsersService:
     def get_user_by_email(self,user_email: str) -> UsersModel | None:
         return self.crud.find_user_by_email(user_email)
     
+    """
+    유저 생성 메서드
+    Args:
+        user_create_dto (UserCreateDTO): 유저 생성 DTO
+    Returns:
+        UsersModel | None: 생성된 유저 모델
+    """
     def create_user(self,user_create_dto:UserCreateDTO) -> UsersModel | None:
         user_email= user_create_dto.email
         
@@ -26,7 +33,13 @@ class UsersService:
         )
         return self.crud.save_user(user)
     
-    
+    """
+    유저 삭제 메서드
+    Args:
+        user_create_dto (UserCreateDTO): 유저 삭제 DTO
+    Returns:
+        None
+    """
     def delete_user(self,user_create_dto:UserCreateDTO):
         email = user_create_dto.email
         pw = user_create_dto.password
