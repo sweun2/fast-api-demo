@@ -20,8 +20,13 @@
    pip install -r requirements.txt
    ```
 3. `.env` 파일 생성 후 데이터베이스 연결 정보 설정
-   db user 및 pw는 프로젝트에 맞게 서정정
-4.  서버 실행
+   db user 및 pw는 프로젝트에 맞게 설정
+
+4. Docker compose 실행행
+   ```bash
+   docker-compose up -d
+   ```
+5.  서버 실행
    ```bash
    uvicorn app.main:app --reload
    ```
