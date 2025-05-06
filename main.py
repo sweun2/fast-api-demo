@@ -4,23 +4,30 @@ from app.api.v1.routers import api_router
 from contextlib import asynccontextmanager
 from sqlalchemy.orm import Session
 from app.core.database import Base, engine, SessionLocal
-from app.core.models import Items
+from app.core.models import Items, Users
 
 
 
 # 마이그레이션 툴 도입 x
 def on_startup():
+    Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
+
     
 def seed_default_items():
     session: Session = SessionLocal()
     try:
-        # 이미 데이터가 있으면 삽입 생략
         if session.query(Items).count() == 0:
             defaults = [
                 Items(itemname="item1", price=1000),
                 Items(itemname="item2", price=2000),
                 Items(itemname="item3", price=3000),
+            ]
+            session.add_all(defaults)
+            session.commit()
+        if session.query(Users).count() == 0:
+            defaults = [
+                Users(username="user1", email="test@gmail.com", hashed_pw="1234"),
             ]
             session.add_all(defaults)
             session.commit()

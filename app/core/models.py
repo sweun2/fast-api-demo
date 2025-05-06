@@ -19,6 +19,7 @@ class Items(Base):
     id       = Column(Integer, primary_key=True, index=True)
     itemname = Column(String(50), unique=True, index=True, nullable=False)
     price    = Column(Integer, nullable=False)
+    quantity = Column(Integer, nullable=False, default=10)
     
     orders    = relationship("Orders", back_populates="item")
 
