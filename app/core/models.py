@@ -28,7 +28,7 @@ class Orders(Base):
 
     id       = Column(Integer, primary_key=True, index=True)
     item_id  = Column(Integer, ForeignKey("items.id"), nullable=False, index=True)
-    user_id  = Column(Integer, ForeignKey("users.id"), nullable=False, index=True, unique=True)
+    user_id  = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
     quantity = Column(Integer, nullable=False)
     user = relationship("Users", back_populates="orders")
     item = relationship("Items", back_populates="orders")
