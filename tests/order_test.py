@@ -3,7 +3,7 @@ import httpx
 import time
 URL = "http://localhost:8000/api/v1/orders/"
 PAYLOAD = {"item_id": 1, "quantity": 2, "user_id": 1}
-CONCURRENT_REQUESTS = 50
+CONCURRENT_REQUESTS = 300
 
 async def create_order(client, idx):
     resp = await client.post(URL, json=PAYLOAD)
