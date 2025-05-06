@@ -7,7 +7,7 @@ class Users(Base):
 
     id       = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, index=True, nullable=False)
-    hashed_pw= Column(String(128), nullable=False)
+    email   = Column(String(50), unique=True, index=True, nullable=False)
     hashed_pw= Column(String(128), nullable=False)
     
     orders    = relationship("Orders", back_populates="user")
