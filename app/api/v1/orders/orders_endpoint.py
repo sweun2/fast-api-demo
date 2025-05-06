@@ -17,7 +17,7 @@ def read_order(id: int = Path(
 @router.post("/",
     response_model=orders_schemas.OrderReadDTO,
     summary="주문 생성 API",
-    description="주문을 생성하는 API입니다.",
+    description="주문를 생성하는 API입니다.",
     response_description="주문 생성 데이터")
 def create_order(order_create_dto: orders_schemas.OrderCreateDTO, 
                       ordersService: OrdersService = Depends(get_order_service)):

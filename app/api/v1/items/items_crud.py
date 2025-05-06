@@ -5,40 +5,48 @@ class ItemsCrud:
     def __init__(self, db: Session):
         self.db = db
         
-    def find
+    def find_item_by_id(self, item_id: int) -> ItemsModel | None:
+        return self.db.query(ItemsModel).filter(ItemsModel.id == item_id).first()
+    def find_item_by_id_with_for_update(self, item_id: int) -> ItemsModel | None:
+        return self.db.query(ItemsModel).filter(ItemsModel.id == item_id).with_for_update().first()
     
-    def find_user_by_id(self, user_id: int) -> UsersModel | None:
-        return self.db.query(UsersModel).filter(UsersModel.id == user_id).first()
+    def find_item_by_itemname(self, item_name: str) -> ItemsModel | None:
+        return self.db.query(ItemsModel).filter(ItemsModel.itemname == item_name).first()
     """
-    유저 이메일로 유저 찾기 메서드
+    아이템 저장 메서드
     Args:
-        user_email (str): 유저 이메일
+        item (ItemsModel): 아이템 모델
     Returns:
-        UsersModel | None: 유저 모델
-    """
-    def find_user_by_email(self, user_email: str) -> UsersModel | None:
-        return self.db.query(UsersModel).filter(UsersModel.email == user_email).first()
-    """
-    유저 생성 메서드
-    Args:
-        user (UsersModel): 유저 모델
-    Returns:
-        UsersModel | None: 생성된 유저 모델
+        ItemsModel | None: 생성된 아이템 모델
     Commit: True
     """
-    def save_user(self,user: UsersModel) -> UsersModel:
-        self.db.add(user)
+    def save_item(self, item: ItemsModel) -> ItemsModel:
+        self.db.add(item)
         self.db.commit()
-        self.db.refresh(user)
-        return user
+        self.db.refresh(item)
+        return item
+    
     """
-    유저 삭제 메서드
+    아이템 저장 메서드
     Args:
-        user (UsersModel): 유저 모델
+        item (ItemsModel): 아이템 모델
+    Returns:
+        ItemsModel | None: 생성된 아이템 모델
+    Commit: True
+    """
+    def save_item_without_commit(self, item: ItemsModel) -> ItemsModel:
+        self.db.add(item)
+        self.db.flush()
+        return item
+    
+    """
+    아이템 삭제 메서드
+    Args:
+        item (ItemsModel): 아이템 모델
     Returns:
         None
     Commit: True
     """
-    def delete_user(self,user: UsersModel) -> None:
-        self.db.delete(user)
+    def delete_item(self, item: ItemsModel) -> None:
+        self.db.delete(item)
         self.db.commit()

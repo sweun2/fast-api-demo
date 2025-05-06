@@ -5,11 +5,16 @@ from contextlib import asynccontextmanager
 from sqlalchemy.orm import Session
 from app.core.database import Base, engine, SessionLocal
 from app.core.models import Items, Users
-
-
+from app.core.middleware import LoggingMiddleware
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+)
 
 # 마이그레이션 툴 도입 x
 def on_startup():
+    
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
 
@@ -19,9 +24,9 @@ def seed_default_items():
     try:
         if session.query(Items).count() == 0:
             defaults = [
-                Items(itemname="item1", price=1000),
-                Items(itemname="item2", price=2000),
-                Items(itemname="item3", price=3000),
+                Items(itemname="item1", price=1000, quantity=1000),
+                Items(itemname="item2", price=2000, quantity=1000),
+                Items(itemname="item3", price=3000, quantity=1000),
             ]
             session.add_all(defaults)
             session.commit()
@@ -48,5 +53,5 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
-
+app.add_middleware(LoggingMiddleware)
 app.include_router(api_router, prefix="/api/v1")      
