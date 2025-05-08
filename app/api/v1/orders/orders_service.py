@@ -14,16 +14,16 @@ class OrdersService:
     def get_order_by_id(self, order_id: int) -> OrdersModel | None:
         return self.order_curd.find_order_by_id(order_id)
     
-    """
-    주문 생성 메서드
-    Args:
-        order_create_dto (OrderCreateDTO): 주문 생성 DTO
-    Returns:
-        OrdersModel | None: 생성된 주문 모델
-    Description:
-        주문 생성 시 해당 개수만큼 아이템 차감
-    """
     def create_order(self, order_create_dto: OrderCreateDTO) -> OrdersModel | None:
+        """
+        주문 생성 메서드
+        Args:
+            order_create_dto (OrderCreateDTO): 주문 생성 DTO
+        Returns:
+            OrdersModel | None: 생성된 주문 모델
+        Description:
+            주문 생성 시 해당 개수만큼 아이템 차감
+        """
         order = OrdersModel(
             item_id=order_create_dto.item_id,
             quantity=order_create_dto.quantity,
@@ -40,14 +40,15 @@ class OrdersService:
         self.db.commit()
         return order
     
-    """
-    주문 삭제 메서드
-    Args:
-        order_id (int): 주문 ID
-    Returns:
-        None
-    """
     def delete_order(self, order_id: int) -> None:
+        
+        """
+        주문 삭제 메서드
+        Args:
+            order_id (int): 주문 ID
+        Returns:
+            None
+        """
         order: OrdersModel | None = self.order_curd.find_order_by_id(order_id)
         if order is None:
             raise ValueError("해당하는 주문이 없습니다")
